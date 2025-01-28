@@ -6,11 +6,11 @@ import {
   GeneratorCallback,
   installPackagesTask,
   joinPathFragments,
-  readNxJson,
+  readProjectConfiguration,
   runTasksInSerial,
   Tree,
   updateJson,
-  updateNxJson,
+  updateProjectConfiguration,
   writeJson,
 } from '@nx/devkit';
 import { getRelativeCwd } from '@nx/devkit/src/generators/artifact-name-and-directory-utils';
@@ -37,6 +37,10 @@ import {
 } from '@nx/js/src/utils/typescript/ts-solution-setup';
 import { determineEntryFields } from './lib/determine-entry-fields';
 import { sortPackageJsonFields } from '@nx/js/src/utils/package-json/sort-fields';
+import {
+  addReleaseOptionForPublishableTarget,
+  releaseTasks,
+} from '@nx/js/src/generators/library/utils/add-release-config';
 
 export async function libraryGenerator(host: Tree, schema: Schema) {
   return await libraryGeneratorInternal(host, {
@@ -45,7 +49,7 @@ export async function libraryGenerator(host: Tree, schema: Schema) {
   });
 }
 
-export async function libraryGeneratorInternal(host: Tree, schema: Schema) {
+async function libraryGeneratorInternal(host: Tree, schema: Schema) {
   const tasks: GeneratorCallback[] = [];
 
   const jsInitTask = await jsInitGenerator(host, {
@@ -236,11 +240,22 @@ export async function libraryGeneratorInternal(host: Tree, schema: Schema) {
     tasks.push(componentTask);
   }
 
-  if (options.publishable || options.buildable) {
+  if ((options.publishable || options.buildable) && options.importPath) {
     updateJson(host, `${options.projectRoot}/package.json`, (json) => {
       json.name = options.importPath;
       return json;
     });
+  }
+  if (options.publishable) {
+    const projectConfiguration = readProjectConfiguration(host, options.name);
+    await addReleaseOptionForPublishableTarget(
+      host,
+      options.name,
+      projectConfiguration,
+      options.isUsingTsSolutionConfig
+    );
+    updateProjectConfiguration(host, options.name, projectConfiguration);
+    tasks.push(await releaseTasks(host));
   }
 
   if (!options.skipPackageJson) {
