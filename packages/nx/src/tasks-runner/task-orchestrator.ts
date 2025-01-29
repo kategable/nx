@@ -68,6 +68,8 @@ export class TaskOrchestrator {
   private bailed = false;
 
   private runningContinuousTasks = new Map<string, RunningTask>();
+
+  private cleaningUp = false;
   // endregion internal state
 
   constructor(
@@ -547,8 +549,8 @@ export class TaskOrchestrator {
     try {
       const usePtyFork = process.env.NX_NATIVE_COMMAND_RUNNER !== 'false';
 
-      // Disable the pseudo terminal if this is a run-many
-      const disablePseudoTerminal = !this.initiatingProject;
+      // Disable the pseudo terminal if this is a run-many or when running a continuous task
+      const disablePseudoTerminal = !this.initiatingProject || task.continuous;
       // execution
       const childProcess = usePtyFork
         ? await this.forkedProcessTaskRunner.forkProcess(task, {
@@ -811,12 +813,14 @@ export class TaskOrchestrator {
     );
 
     childProcess.onExit((code) => {
-      console.error(
-        `Task "${task.id}" is continuous but exited with code ${code}`
-      );
-      this.cleanup().then(() => {
-        process.exit(1);
-      });
+      if (!this.cleaningUp) {
+        console.error(
+          `Task "${task.id}" is continuous but exited with code ${code}`
+        );
+        this.cleanup().then(() => {
+          process.exit(1);
+        });
+      }
     });
     if (
       this.initiatingProject === task.target.project &&
@@ -835,6 +839,7 @@ export class TaskOrchestrator {
   }
 
   private async cleanup() {
+    this.cleaningUp = true;
     await Promise.all(
       Array.from(this.runningContinuousTasks).map(async ([taskId, t]) => {
         try {

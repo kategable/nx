@@ -312,8 +312,8 @@ class RunningNodeProcess implements RunningTask {
 
   getResults(): Promise<{ code: number; terminalOutput: string }> {
     return new Promise((res) => {
-      this.onExit((code) => {
-        res({ code, terminalOutput: this.terminalOutput });
+      this.onExit((code, terminalOutput) => {
+        res({ code, terminalOutput });
       });
     });
   }

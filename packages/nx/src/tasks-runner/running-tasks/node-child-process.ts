@@ -81,7 +81,7 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
   }
 
   private async waitForExit(): Promise<number> {
-    if (!Number.isNaN(this.exitCode)) {
+    if (typeof this.exitCode === 'number') {
       return this.exitCode;
     }
 
