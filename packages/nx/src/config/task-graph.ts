@@ -85,7 +85,7 @@ export interface Task {
   /**
    * This denotes if the task runs continuously
    */
-  continuous: boolean;
+  continuous?: boolean;
 }
 
 /**

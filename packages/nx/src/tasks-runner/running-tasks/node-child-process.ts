@@ -8,7 +8,8 @@ import { readFileSync } from 'fs';
 export class NodeChildProcessWithNonDirectOutput implements RunningTask {
   private terminalOutput: string;
   private exitCode: number;
-  private exitCallbacks: Array<(code: number) => void> = [];
+  private exitCallbacks: Array<(code: number, terminalOutput: string) => void> =
+    [];
 
   constructor(
     private childProcess: ChildProcess,
@@ -39,7 +40,7 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
 
     this.onExit(() => {
       for (const cb of this.exitCallbacks) {
-        cb(this.exitCode);
+        cb(this.exitCode, this.terminalOutput);
       }
     });
 
@@ -58,7 +59,7 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
     });
   }
 
-  onExit(cb: (code: number) => void) {
+  onExit(cb: (code: number, terminalOutput: string) => void) {
     this.exitCallbacks.push(cb);
   }
 
@@ -155,7 +156,7 @@ function logClearLineToPrefixTransformer(prefix: string) {
 }
 
 export class NodeChildProcessWithDirectOutput implements RunningTask {
-  private terminalOutput = '';
+  private terminalOutput: string | undefined;
   private exitCallbacks: Array<(code: number, signal: string) => void> = [];
 
   private exited = false;
@@ -163,7 +164,7 @@ export class NodeChildProcessWithDirectOutput implements RunningTask {
 
   constructor(
     private childProcess: ChildProcess,
-    { temporaryOutputPath }: { temporaryOutputPath: string }
+    private temporaryOutputPath: string
   ) {
     // Re-emit any messages from the task process
     this.childProcess.on('message', (message) => {
@@ -182,10 +183,6 @@ export class NodeChildProcessWithDirectOutput implements RunningTask {
         cb(code, signal);
       }
     });
-
-    this.onExit(() => {
-      this.terminalOutput = readFileSync(temporaryOutputPath).toString();
-    });
   }
 
   send(message: Serializable): void {
@@ -199,16 +196,17 @@ export class NodeChildProcessWithDirectOutput implements RunningTask {
   }
 
   async getResults(): Promise<{ code: number; terminalOutput: string }> {
+    const terminalOutput = this.getTerminalOutput();
     if (this.exited) {
       return Promise.resolve({
         code: this.exitCode,
-        terminalOutput: this.terminalOutput,
+        terminalOutput,
       });
     }
     await this.waitForExit();
     return Promise.resolve({
       code: this.exitCode,
-      terminalOutput: this.terminalOutput,
+      terminalOutput,
     });
   }
 
@@ -219,6 +217,7 @@ export class NodeChildProcessWithDirectOutput implements RunningTask {
   }
 
   getTerminalOutput() {
+    this.terminalOutput ??= readFileSync(this.temporaryOutputPath).toString();
     return this.terminalOutput;
   }
 

@@ -31,7 +31,7 @@ Determines if a given task should be cacheable.
 
 ### continuous
 
-• **continuous**: `boolean`
+• `Optional` **continuous**: `boolean`
 
 This denotes if the task runs continuously
 

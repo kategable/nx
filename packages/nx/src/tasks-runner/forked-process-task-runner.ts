@@ -216,6 +216,7 @@ export class ForkedProcessTaskRunner {
     task: Task,
     {
       streamOutput,
+      temporaryOutputPath,
       taskGraph,
       env,
     }: {
@@ -250,8 +251,17 @@ export class ForkedProcessTaskRunner {
       });
       this.processes.add(cp);
 
-      cp.onExit(() => {
+      cp.onExit((code, terminalOutput) => {
         this.processes.delete(cp);
+
+        if (!streamOutput) {
+          this.options.lifeCycle.printTaskTerminalOutput(
+            task,
+            code === 0 ? 'success' : 'failure',
+            terminalOutput
+          );
+        }
+        this.writeTerminalOutput(temporaryOutputPath, terminalOutput);
       });
 
       return cp;
@@ -284,9 +294,7 @@ export class ForkedProcessTaskRunner {
         stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
         env,
       });
-      const cp = new NodeChildProcessWithDirectOutput(p, {
-        temporaryOutputPath,
-      });
+      const cp = new NodeChildProcessWithDirectOutput(p, temporaryOutputPath);
 
       this.processes.add(cp);
 
@@ -300,10 +308,10 @@ export class ForkedProcessTaskRunner {
 
       cp.onExit((code, signal) => {
         this.processes.delete(cp);
-        const terminalOutput = cp.getTerminalOutput();
         // we didn't print any output as we were running the command
         // print all the collected output
         try {
+          const terminalOutput = cp.getTerminalOutput();
           if (!streamOutput) {
             this.options.lifeCycle.printTaskTerminalOutput(
               task,
