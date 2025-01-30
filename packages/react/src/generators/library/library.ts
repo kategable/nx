@@ -81,9 +81,9 @@ async function libraryGeneratorInternal(host: Tree, schema: Schema) {
 
   if (options.isUsingTsSolutionConfig) {
     writeJson(host, `${options.projectRoot}/package.json`, {
-      name: options.importPath,
+      name: options.importPath ?? options.name,
       version: '0.0.1',
-      ...determineEntryFields(options),
+      ...determineEntryFields(options.bundler, options.js),
       nx: options.parsedTags?.length
         ? {
             tags: options.parsedTags,
@@ -240,12 +240,6 @@ async function libraryGeneratorInternal(host: Tree, schema: Schema) {
     tasks.push(componentTask);
   }
 
-  if ((options.publishable || options.buildable) && options.importPath) {
-    updateJson(host, `${options.projectRoot}/package.json`, (json) => {
-      json.name = options.importPath;
-      return json;
-    });
-  }
   if (options.publishable) {
     const projectConfiguration = readProjectConfiguration(host, options.name);
     await addReleaseOptionForPublishableTarget(
