@@ -52,9 +52,11 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
     });
 
     this.childProcess.stdout.on('data', (chunk) => {
+      this.terminalOutput ??= '';
       this.terminalOutput += chunk.toString();
     });
     this.childProcess.stderr.on('data', (chunk) => {
+      this.terminalOutput ??= '';
       this.terminalOutput += chunk.toString();
     });
   }
