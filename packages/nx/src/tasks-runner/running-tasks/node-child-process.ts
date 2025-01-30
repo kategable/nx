@@ -7,7 +7,6 @@ import { readFileSync } from 'fs';
 
 export class NodeChildProcessWithNonDirectOutput implements RunningTask {
   private terminalOutput: string = '';
-  private exitCode: number;
   private exitCallbacks: Array<(code: number, terminalOutput: string) => void> =
     [];
 
@@ -38,9 +37,10 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
       }
     }
 
-    this.onExit(() => {
+    this.childProcess.on('exit', (code, signal) => {
+      if (code === null) code = signalToCode(signal);
       for (const cb of this.exitCallbacks) {
-        cb(this.exitCode, this.terminalOutput);
+        cb(code, this.terminalOutput);
       }
     });
 
@@ -64,8 +64,11 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
   }
 
   async getResults(): Promise<{ code: number; terminalOutput: string }> {
-    const code = await this.waitForExit();
-    return { code, terminalOutput: this.terminalOutput };
+    return new Promise((res) => {
+      this.onExit((code, terminalOutput) => {
+        res({ code, terminalOutput });
+      });
+    });
   }
 
   send(message: Serializable): void {
@@ -78,23 +81,6 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
     if (this.childProcess.connected) {
       this.childProcess.kill(signal);
     }
-  }
-
-  private async waitForExit(): Promise<number> {
-    if (typeof this.exitCode === 'number') {
-      return this.exitCode;
-    }
-
-    const exitCode = await new Promise<number>((res) => {
-      this.childProcess.on('exit', (code, signal) => {
-        if (code === null) code = signalToCode(signal);
-        res(code);
-      });
-    });
-
-    this.exitCode = exitCode;
-
-    return exitCode;
   }
 }
 
