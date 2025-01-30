@@ -6,7 +6,7 @@ import * as chalk from 'chalk';
 import { readFileSync } from 'fs';
 
 export class NodeChildProcessWithNonDirectOutput implements RunningTask {
-  private terminalOutput: string;
+  private terminalOutput: string = '';
   private exitCode: number;
   private exitCallbacks: Array<(code: number, terminalOutput: string) => void> =
     [];
@@ -52,11 +52,9 @@ export class NodeChildProcessWithNonDirectOutput implements RunningTask {
     });
 
     this.childProcess.stdout.on('data', (chunk) => {
-      this.terminalOutput ??= '';
       this.terminalOutput += chunk.toString();
     });
     this.childProcess.stderr.on('data', (chunk) => {
-      this.terminalOutput ??= '';
       this.terminalOutput += chunk.toString();
     });
   }
