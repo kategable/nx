@@ -135,6 +135,8 @@ export class PseudoTerminal {
   }
 }
 
+let i = 0;
+
 export class PseudoTtyProcess {
   isAlive = true;
 
@@ -153,6 +155,7 @@ export class PseudoTtyProcess {
       this.isAlive = false;
 
       const code = messageToCode(message);
+      childProcess.cleanup();
 
       this.exitCallbacks.forEach((cb) => cb(code));
     });
