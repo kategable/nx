@@ -103,8 +103,6 @@ export class TaskOrchestrator {
 
     const threads = [];
 
-    console.log(`Starting ${threadCount} threads to run tasks`);
-
     process.stdout.setMaxListeners(threadCount + defaultMaxListeners);
     process.stderr.setMaxListeners(threadCount + defaultMaxListeners);
 
