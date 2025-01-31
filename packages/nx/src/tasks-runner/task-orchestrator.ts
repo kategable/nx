@@ -342,11 +342,13 @@ export class TaskOrchestrator {
 
   private async runBatch(batch: Batch, env: NodeJS.ProcessEnv) {
     try {
-      const results = await this.forkedProcessTaskRunner.forkProcessForBatch(
-        batch,
-        this.taskGraph,
-        env
-      );
+      const batchProcess =
+        await this.forkedProcessTaskRunner.forkProcessForBatch(
+          batch,
+          this.taskGraph,
+          env
+        );
+      const results = await batchProcess.getResults();
       const batchResultEntries = Object.entries(results);
       return batchResultEntries.map(([taskId, result]) => ({
         ...result,

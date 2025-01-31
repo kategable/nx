@@ -7,10 +7,8 @@ import { ChildProcess, Serializable } from 'child_process';
 import { signalToCode } from '../../utils/exit-codes';
 
 export class BatchProcess {
-  private results: BatchResults;
   private exitCallbacks: Array<(code: number) => void> = [];
-  private exited = false;
-  private exitCode: number;
+  private resultsCallbacks: Array<(results: BatchResults) => void> = [];
 
   constructor(
     private childProcess: ChildProcess,
@@ -19,7 +17,9 @@ export class BatchProcess {
     this.childProcess.on('message', (message: BatchMessage) => {
       switch (message.type) {
         case BatchMessageType.CompleteBatchExecution: {
-          this.results = message.results;
+          for (const cb of this.resultsCallbacks) {
+            cb(message.results);
+          }
           break;
         }
         case BatchMessageType.RunTasks: {
@@ -37,9 +37,6 @@ export class BatchProcess {
     this.childProcess.once('exit', (code, signal) => {
       if (code === null) code = signalToCode(signal);
 
-      this.exited = true;
-      this.exitCode = code;
-
       for (const cb of this.exitCallbacks) {
         cb(code);
       }
@@ -50,19 +47,27 @@ export class BatchProcess {
     this.exitCallbacks.push(cb);
   }
 
-  async getResults(): Promise<BatchResults> {
-    if (this.exited) {
-      return this.results;
-    }
-    await new Promise((res) => {
-      this.onExit(res);
-    });
+  onResults(cb: (results: BatchResults) => void) {
+    this.resultsCallbacks.push(cb);
+  }
 
-    if (this.exitCode !== 0) {
-      throw Error(
-        `"${this.executorName}" exited unexpectedly with code: ${this.exitCode}`
-      );
-    }
+  async getResults(): Promise<BatchResults> {
+    return Promise.race<BatchResults>([
+      new Promise((_, rej) => {
+        this.onExit((code) => {
+          if (code !== 0) {
+            rej(
+              new Error(
+                `"${this.executorName}" exited unexpectedly with code: ${code}`
+              )
+            );
+          }
+        });
+      }),
+      new Promise((res) => {
+        this.onResults(res);
+      }),
+    ]);
   }
 
   send(message: Serializable): void {
