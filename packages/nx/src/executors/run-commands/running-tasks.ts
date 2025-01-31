@@ -217,18 +217,19 @@ export class SeriallyRunningTasks implements RunningTask {
       this.currentProcess = childProcess;
 
       let { code, terminalOutput } = await childProcess.getResults();
+      this.terminalOutput += terminalOutput;
+      this.code = code;
       if (code !== 0) {
         const output = `Warning: command "${c.command}" exited with non-zero status code`;
         terminalOutput += output;
         if (options.streamOutput) {
           process.stderr.write(output);
         }
-        throw new Error(
-          `Command "${c.command}" exited with non-zero status code`
-        );
+        this.terminalOutput += terminalOutput;
+
+        // Stop running commands
+        break;
       }
-      this.terminalOutput += terminalOutput;
-      this.code = code;
     }
   }
 
