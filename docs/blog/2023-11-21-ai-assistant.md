@@ -4,6 +4,7 @@ slug: 'nx-docs-ai-assistant'
 authors: [Katerina Skroumpelou]
 cover_image: '/blog/images/2023-11-21/featured_img.webp'
 tags: [nx, docs, AI]
+description: An in-depth look at the Nx Docs AI Assistant, exploring its architecture, benefits for users and documentation authors, and how it enhances documentation accessibility through intelligent search and contextual responses.
 ---
 
 ## Introduction

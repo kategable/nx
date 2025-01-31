@@ -5,6 +5,7 @@ authors: [Zack DeRose]
 tags: [typescript, monorepo, nx]
 cover_image: /blog/images/articles/ts-islands.png
 youtubeUrl: https://youtu.be/SDE3cIq28s8
+description: A comprehensive guide to understanding and implementing TypeScript Project References, explaining how they improve build performance and type checking in large TypeScript codebases.
 ---
 
 {% callout type="deepdive" title="TypeScript Project References Series" expanded=true %}

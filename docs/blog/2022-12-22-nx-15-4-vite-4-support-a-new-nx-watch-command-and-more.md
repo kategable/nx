@@ -4,6 +4,7 @@ slug: 'nx-15-4-vite-4-support-a-new-nx-watch-command-and-more'
 authors: ['Zack DeRose']
 cover_image: '/blog/images/2022-12-22/N4_XxtYFr-V2cF6fPoBO3g.png'
 tags: [nx, release]
+description: Announcing Nx 15.4 with major features including Vite 4.0 support, new Nx Watch command for file watching, webpack-less Cypress support for React standalone projects, SSR support for Module Federation, parallel target execution improvements, and interactive prompts for custom presets.
 ---
 
 Nx just had a massive release 2 weeks ago with Nx 15.3 — if you missed it be sure to check out [our article](/blog/nx-15-3-standalone-projects-vite-task-graph-and-more) featuring some huge improvements including Vite support, Standalone Angular and React presets, and a Task Graph visualization!

@@ -4,6 +4,7 @@ slug: 'unit-testing-expo-apps-with-jest'
 authors: [Emily Xiong]
 cover_image: '/blog/images/2023-11-22/featured_img.webp'
 tags: [nx, tutorial]
+description: A practical guide to implementing unit tests for Expo applications using Jest and React Native Testing Library, including solutions for common testing challenges like mocking AsyncStorage, Redux store, React Navigation, and handling ESM modules.
 ---
 
 In my latest [blog](/blog/step-by-step-guide-to-creating-an-expo-monorepo-with-nx), I successfully navigated through the steps of setting up an Expo Monorepo with [Nx](). The next challenge? Testing! This blog dives into:
@@ -16,7 +17,7 @@ Repo:
 
 ## Stacks
 
-Here’s my setup
+Here's my setup
 
 - Testing framework: [jest](https://jestjs.io/)
 - Testing library: [@testing-library/react-native](https://callstack.github.io/react-native-testing-library/)
@@ -24,7 +25,7 @@ Here’s my setup
 
 ## Writing and Running Unit Tests
 
-When you use Nx, it not only configures and sets up Jest, but also creates a default unit test for every expo component that is being generated. Here’s what that looks like:
+When you use Nx, it not only configures and sets up Jest, but also creates a default unit test for every expo component that is being generated. Here's what that looks like:
 
 ```typescript
 import { render } from '@testing-library/react-native';
@@ -46,7 +47,7 @@ To run all unit tests for a given project, use:
 npx nx test <project-name>
 ```
 
-Here’s the output of running this for my example app:
+Here's the output of running this for my example app:
 
 ![terminal output](/blog/images/2023-11-22/bodyimg1.webp)
 
@@ -95,7 +96,7 @@ I am using the library `@react-native-async-storage/async-storage`, and I got th
 
 The issue is that `@react-native-async-storage/async-storage` library can only be used in `NativeModule`. Since unit testing with Jest only tests JS/TS file logic, I need to mock this library.
 
-In the app’s test-setup.ts file, add the below lines:
+In the app's test-setup.ts file, add the below lines:
 
 ```typescript
 jest.mock('@react-native-async-storage/async-storage', () =>
@@ -103,7 +104,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
 );
 ```
 
-## Error: Could not find “store”
+## Error: Could not find "store"
 
 I am using Redux for state management, and I got this error for my stateful components:
 
@@ -146,7 +147,7 @@ beforeEach(() => {
 });
 ```
 
-For example, one of my stateful components’ unit test will become:
+For example, one of my stateful components' unit test will become:
 
 ```typescript
 import React from 'react';
@@ -207,7 +208,7 @@ jest.spyOn(ReactQuery, 'useQuery').mockImplementation(
 );
 ```
 
-### Error: Couldn’t find a navigation object
+### Error: Couldn't find a navigation object
 
 If you use `@react-navigation` library for navigation, and inside your component, there are hooks from this library like `useNavigation` and `useRoute`, you are likely to get this error:
 

@@ -5,6 +5,7 @@ authors: ['Juri Strumpflohner']
 tags: [nx-cloud, release]
 cover_image: /blog/images/2024-08/nx-cloud-table-log-output-thumb.jpg
 youtubeUrl: https://youtu.be/aacrw0H0m4Q
+description: Introducing a new structured table view for CI logs in Nx Cloud that improves developer ergonomics by making it easier to track and find task statuses, timing, and cache hits in monorepo setups.
 ---
 
 Whenever we talk about Nx Cloud, speed is often a major focus—and for good reason. However, Nx Cloud isn't just about speed. Similar to Nx itself, it's about making work within monorepos more pleasant and efficient. A key part of that is continuously **optimizing developer ergonomics**.

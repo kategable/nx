@@ -4,6 +4,7 @@ slug: 'rspack-getting-up-to-speed-with-nx'
 authors: ['Juri Strumpflohner']
 cover_image: '/blog/images/2023-03-10/fWQ53mw2itEs3SGAOJVonQ.png'
 tags: [nx]
+description: Introducing Nx's integration with Rspack, ByteDance's high-performance Rust-based Webpack alternative, featuring streamlined setup for React applications, 5-10x faster compilation speeds, and seamless compatibility with Nx's monorepo features including caching and code generation.
 ---
 
 At Nx, we are excited to see the JavaScript tooling ecosystem evolve, particularly when it comes to improving speed! Performance is at the core of Nx. Faster tools with which we can integrate make our lives easier and allow us to provide a better experience for developers.
@@ -14,7 +15,7 @@ Almost a year ago [ByteDance](https://www.bytedance.com/) started developing a n
 
 Rspack is a rewrite of Webpack with the primary goal of improving performance. Rust is the main language, allowing for a highly parallelized architecture that takes full advantage of modern multi-core CPUs. In addition, it also comes with essential bundling features already built-in to avoid further bottlenecks from 3rd-party packages. It also highly optimizes HMR (Hot Module Replacement) using a specialized incremental compilation strategy.
 
-ByteDance developed Rspack to solve performance issues they faced when developing and maintaining their internal monolithic applications, all of which rely heavily on complex Webpack configurations. Rspack being a rewrite allows to rely on Webpack’s mature architecture and is, at the same time, an easy drop-in replacement.
+ByteDance developed Rspack to solve performance issues they faced when developing and maintaining their internal monolithic applications, all of which rely heavily on complex Webpack configurations. Rspack being a rewrite allows to rely on Webpack's mature architecture and is, at the same time, an easy drop-in replacement.
 
 ByteDance already applied Rspack on some of their internal business applications and has seen between 5 to 10x improvement in compilation performance.
 
@@ -46,7 +47,7 @@ All the usual Nx features, such as
 
 ..work out of the box.
 
-But not just the “speed features”. All the code generators, automate code migrations, and [code editor extensions](/getting-started/editor-setup) work too.
+But not just the "speed features". All the code generators, automate code migrations, and [code editor extensions](/getting-started/editor-setup) work too.
 
 ## Rspack in an Nx Monorepo
 

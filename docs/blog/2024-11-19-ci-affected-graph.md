@@ -5,6 +5,7 @@ authors: ['Philip Fulcher']
 tags: [nx-cloud]
 cover_image: /blog/images/2024-11-19/header.avif
 youtubeUrl: https://youtu.be/TS-Fp2iSlVM
+description: Explore how Nx Cloud's new affected project graph visualization helps you understand which projects and tasks are impacted by your changes in CI, providing better insight into your monorepo's dependencies.
 ---
 
 As monorepos grow in size and complexity, it can be difficult to understand the relationships between different parts of

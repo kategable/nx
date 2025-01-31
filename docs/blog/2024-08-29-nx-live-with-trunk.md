@@ -5,6 +5,7 @@ authors: ['Zack DeRose']
 tags: [livestream]
 cover_image: /blog/images/2024-08-29/nx-live-trunk.png
 youtubeUrl: https://youtube.com/live/E8Gh-Vkxok0
+description: A live demonstration with Trunk.io's David showing how to optimize PR workflows using Nx and Trunk Merge Queues, featuring the new first-class Nx support in Trunk for improved development efficiency.
 ---
 
 In this episode of Nx Live, Zack sits down with David from [Trunk.io](https://trunk.io) to explore hands-on examples of how to fast-track your PRs using Nx and Trunk Merge Queues. They also discuss the latest [first-class support for Nx](https://docs.trunk.io/merge-queue/parallel-queues/nx) recently added to Trunk, demonstrating how these tools can streamline your development workflow.

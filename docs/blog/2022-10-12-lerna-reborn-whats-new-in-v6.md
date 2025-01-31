@@ -1,12 +1,13 @@
 ---
-title: 'Lerna reborn — What’s new in v6?'
+title: "Lerna reborn — What's new in v6?"
 slug: 'lerna-reborn-whats-new-in-v6'
 authors: ['Juri Strumpflohner']
 cover_image: '/blog/images/2022-10-12/RGQCNNO-SSQ8PHnIZ4BVTQ.png'
 tags: [nx, release]
+description: Announcing Lerna v6 with major improvements including default Nx integration for faster builds, remote caching capabilities, PNPM support, dynamic terminal output, VSCode extension, task pipeline configuration, and automated caching setup through the new add-caching command.
 ---
 
-Lerna v6 is out!! Here’s everything you need to know about the **new Lerna experience!**
+Lerna v6 is out!! Here's everything you need to know about the **new Lerna experience!**
 
 **Table of Contents**
 
@@ -26,7 +27,7 @@ Lerna v6 is out!! Here’s everything you need to know about the **new Lerna exp
 
 ## Lerna continues to evolve
 
-If you already know this, feel free to skip ahead. But surprisingly many still haven’t heard that **Lerna is back**, far from obsolete or deprecated and is getting brand new features. We from [Nrwl](/company) are the creators of Nx and given our long history in the monorepo space, we offered to [take over stewardship of Lerna](/blog/lerna-is-dead-long-live-lerna) when it was declared “dead” in April 2022.
+If you already know this, feel free to skip ahead. But surprisingly many still haven't heard that **Lerna is back**, far from obsolete or deprecated and is getting brand new features. We from [Nrwl](/company) are the creators of Nx and given our long history in the monorepo space, we offered to [take over stewardship of Lerna](/blog/lerna-is-dead-long-live-lerna) when it was declared "dead" in April 2022.
 
 Since we took over, in May 2022, it has been an absolute rollercoaster. We launched [a brand new website](https://lerna.js.org/), updated the content of the docs, and [made Lerna 10x faster](/blog/lerna-used-to-walk-now-it-can-fly). And now, **Lerna v6 is out!**
 
@@ -34,7 +35,7 @@ Since we took over, in May 2022, it has been an absolute rollercoaster. We launc
 
 Up until Lerna v4, either the `p-map` or `p-queue` npm packages have been used to delegate the task scheduling. With [v5.1](/blog/lerna-used-to-walk-now-it-can-fly) we introduced `nx` as an additional mechanism to schedule tasks. The advantage? Nx has caching built-in, which **also gives Lerna caching support**, making it lightning fast. A recent benchmark test resulted in **Lerna being 2.5x faster than Lage** and around **4x faster than Turbo** (as of Oct 2022; [test it out by yourself](https://github.com/vsavkin/large-monorepo)).
 
-So far you had to enable “Nx support” by setting the `useNx` flag in `lerna.json`:
+So far you had to enable "Nx support" by setting the `useNx` flag in `lerna.json`:
 
 ```
 // lerna.json
@@ -44,7 +45,7 @@ So far you had to enable “Nx support” by setting the `useNx` flag in `lerna.
 }
 ```
 
-We’ve been testing this opt-in for the last couple of months and got tons of amazing feedback from companies and open source projects. As a result, **with v6 all Lerna workspaces have the useNx set to** `**true**` **by default** even if you don't have it in your Lerna config file. If you don't want to use it, you can disable it by setting the flag to false.
+We've been testing this opt-in for the last couple of months and got tons of amazing feedback from companies and open source projects. As a result, **with v6 all Lerna workspaces have the useNx set to** `**true**` **by default** even if you don't have it in your Lerna config file. If you don't want to use it, you can disable it by setting the flag to false.
 
 To experience fast caching, ensure you have a `nx.json` file at the root of your Lerna workspace where you define the cacheable operations. Check out [the docs for more details](https://lerna.js.org/docs/features/cache-tasks). Here's an example configuration file:
 
@@ -73,7 +74,7 @@ npx lerna add-caching
 
 By using Nx as the task scheduler for Lerna it inherits all the capabilities Nx comes with. That not only just includes local caching, but also the possibility of having **remote caching** and **distributed task execution**.
 
-Remote caching allows you to distribute your local cache with your co-workers and your CI system. This is done via [Nx Cloud](/nx-cloud). But distributed caching is just one aspect. Nx Cloud also comes with a “run view” that visualizes your CI run with easy grouping and filtering capabilities, but in particular, it comes with the ability to distribute your tasks dynamically across multiple machines. All by optimizing for the best parallelization and machine utilization.
+Remote caching allows you to distribute your local cache with your co-workers and your CI system. This is done via [Nx Cloud](/nx-cloud). But distributed caching is just one aspect. Nx Cloud also comes with a "run view" that visualizes your CI run with easy grouping and filtering capabilities, but in particular, it comes with the ability to distribute your tasks dynamically across multiple machines. All by optimizing for the best parallelization and machine utilization.
 
 ![](/blog/images/2022-10-12/CtvU5Me27YRidzG1.avif)
 
@@ -114,7 +115,7 @@ In this case, whenever you run either `build` or `dev`, Lerna would first run th
 
 ## Lerna add-caching command
 
-If you don’t have caching or your task pipeline set up just yet, no worries. We wanted to make it as easy as possible by providing a dedicated command:
+If you don't have caching or your task pipeline set up just yet, no worries. We wanted to make it as easy as possible by providing a dedicated command:
 
 ```shell
 npx lerna add-caching
@@ -122,7 +123,7 @@ npx lerna add-caching
 
 This will scan your workspace, find all your `package.json` scripts and then guide you through the **configuration of both, your cacheable operations as well as your task pipeline**.
 
-Here’s a quick walkthrough video:
+Here's a quick walkthrough video:
 
 {% youtube src="https://www.youtube.com/watch?v=jaH2BqWo-Pc" /%}
 
@@ -130,14 +131,14 @@ You are obviously always free to create the `nx.json`by hand.
 
 ## PNPM support for Lerna
 
-In the past, Lerna didn’t properly support PNPM. We fixed this in v6. Now whenever you use Lerna in combination with PNPM, we make sure to detect packages based on the `pnpm-workspace.yaml`, to enforce `useWorkspaces: true` , we update the `pnpm-lock.yaml`  
+In the past, Lerna didn't properly support PNPM. We fixed this in v6. Now whenever you use Lerna in combination with PNPM, we make sure to detect packages based on the `pnpm-workspace.yaml`, to enforce `useWorkspaces: true` , we update the `pnpm-lock.yaml`  
 accordingly when using `lerna version` and we also added proper support for the `workspace:` protocol that PNPM uses.
 
 You can now finally use one of the fastest package managers in combination with a new fast Lerna experience. Also, make sure to check [out our docs for all the details](https://lerna.js.org/docs/recipes/using-pnpm-with-lerna).
 
 ## Dynamic terminal output
 
-When running tasks in parallel across a large number of projects, it can become quite difficult to follow along in the terminal with what got built and where tasks failed. That’s why the new Lerna version comes with a dynamic terminal output that only shows what is most relevant at a given moment.
+When running tasks in parallel across a large number of projects, it can become quite difficult to follow along in the terminal with what got built and where tasks failed. That's why the new Lerna version comes with a dynamic terminal output that only shows what is most relevant at a given moment.
 
 ![](/blog/images/2022-10-12/8hPYG2wuAMk5hri0.avif)
 
@@ -153,7 +154,7 @@ Or visualize a project and its relationships with other projects in the workspac
 
 ![](/blog/images/2022-10-12/ZFhpQX9xS59eZD7Q.avif)
 
-You will also get intelligent autocompletion in configuration files. Here’s an example of Nx console providing context-based information when editing the `nx.json` task dependencies.
+You will also get intelligent autocompletion in configuration files. Here's an example of Nx console providing context-based information when editing the `nx.json` task dependencies.
 
 ![](/blog/images/2022-10-12/pMotejmmm1TUsLR2.avif)
 
@@ -175,7 +176,7 @@ Migrating from Lerna v5 to v6 is non-breaking. We increased the major because we
 
 {% youtube src="https://www.youtube.com/embed/kOD7880DNEE" /%}
 
-Similarly, if you’re still on v4 and want to migrate to v6 it should be pretty straightforward and not be breaking in most cases.
+Similarly, if you're still on v4 and want to migrate to v6 it should be pretty straightforward and not be breaking in most cases.
 
 Just update the Lerna package version to the latest and then run..
 
@@ -194,9 +195,9 @@ You can read more about that [on our docs](https://lerna.js.org/docs/lerna-and-n
 ## Are you maintaining an OSS repository using Lerna?
 
 If you are an OSS maintainer and you use a Lerna workspace, let us know!  
-Ping the Lerna team [on Twitter](https://twitter.com/lernajs) or ping [me directly](https://twitter.com/juristr). We’d love to have a look and help with the migration, look at the repository and make sure it is configured in the best optimal way in terms of monorepo setup and features like caching.
+Ping the Lerna team [on Twitter](https://twitter.com/lernajs) or ping [me directly](https://twitter.com/juristr). We'd love to have a look and help with the migration, look at the repository and make sure it is configured in the best optimal way in terms of monorepo setup and features like caching.
 
-That said, as an open-source maintainer you also get unlimited free computation caching with Nx Cloud. So we’d love to set you up with that.
+That said, as an open-source maintainer you also get unlimited free computation caching with Nx Cloud. So we'd love to set you up with that.
 
 ## Learn more
 

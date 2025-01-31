@@ -4,15 +4,16 @@ slug: announcing-your-monorepo-world-speakers-pt-2
 authors: ['Mike Hartington']
 tags: [monorepo-world]
 cover_image: /blog/images/2024-09-16/mw-blog-post.avif
+description: Introducing the second wave of speakers for Monorepo World conference, featuring experts from Aspect Build Systems, Trunk.io, and other companies sharing insights on Python monorepos, Bazel, and merge queues at scale.
 ---
 
-[Monorepo World](https://monorepo.world) is our two-track conference bringing together experts in developer tooling and of course, monorepos. We’re thrilled to share some of this year's speakers, including folks from Aspect Build Systems, Trunk.io, Aviator Technologies, and Postman. Without further ado, let’s meet your speakers!
+[Monorepo World](https://monorepo.world) is our two-track conference bringing together experts in developer tooling and of course, monorepos. We're thrilled to share some of this year's speakers, including folks from Aspect Build Systems, Trunk.io, Aviator Technologies, and Postman. Without further ado, let's meet your speakers!
 
 ## Python Monorepos with Bazel
 
 [Alex Eagle](https://x.com/Jakeherringbone), Aspect Build Systems
 
-Bazel is Google’s open source incremental build tool made for extreme scalability and support for many languages. Let’s look at how Bazel can provide features like CI/CD, building and testing, as well as formatting/linting in a Python environment.
+Bazel is Google's open source incremental build tool made for extreme scalability and support for many languages. Let's look at how Bazel can provide features like CI/CD, building and testing, as well as formatting/linting in a Python environment.
 
 ## Merge Queues at Scale
 
@@ -36,8 +37,8 @@ We often pit Polyrepos against Monorepos, but why not merge the best of both wor
 
 [Patrick Sevat](https://x.com/_Sevat), Postman
 
-“Oops, it turns out my PR was actually a breaking change. I'm so sorry I broke production for all apps except ours”. This developer nightmare was the worst case scenario the team at Postman has solved. This talk will focus on how shared dependencies can keep federated apps small in bundle size, but come at the risk of breaking other apps when semantic versioning (SemVer) is not adhered to.
+"Oops, it turns out my PR was actually a breaking change. I'm so sorry I broke production for all apps except ours". This developer nightmare was the worst case scenario the team at Postman has solved. This talk will focus on how shared dependencies can keep federated apps small in bundle size, but come at the risk of breaking other apps when semantic versioning (SemVer) is not adhered to.
 
-We hope you’re excited to see these amazing sessions! We’ll have more to share soon about what other speakers you can expect to see at Monorepo world! Don’t forget to register and get your ticket before it’s too late 😱!
+We hope you're excited to see these amazing sessions! We'll have more to share soon about what other speakers you can expect to see at Monorepo world! Don't forget to register and get your ticket before it's too late 😱!
 
 [Get your tickets today!](https://bit.ly/3YZcb5r)

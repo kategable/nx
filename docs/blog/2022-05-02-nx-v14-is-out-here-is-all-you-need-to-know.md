@@ -4,9 +4,10 @@ slug: 'nx-v14-is-out-here-is-all-you-need-to-know'
 authors: ['Juri Strumpflohner']
 cover_image: '/blog/images/2022-05-02/UAN1p_RMt38_IvB3CRpYTA.png'
 tags: [nx, release]
+description: Announcing Nx v14 with major improvements including enhanced performance with Nx Daemon, simplified core package structure, improved terminal output, local plugin development support, automated CI setup, module federation capabilities, dark mode for project graph visualization, and comprehensive React 18 support.
 ---
 
-A lot happened since we released Nx version 13 back in October 2021. Nx has roughly a 6-month major release cycle and so that time has come again: I’m happy to announce the **release of Nx v14**.
+A lot happened since we released Nx version 13 back in October 2021. Nx has roughly a 6-month major release cycle and so that time has come again: I'm happy to announce the **release of Nx v14**.
 
 Those last 6 months have been incredible and Nx probably got the biggest boost ever in terms of simplicity, features, and speed. We even made Nx more beautiful. Join me to explore some of the biggest highlights and what makes v14 so incredible.
 
@@ -16,7 +17,7 @@ Those last 6 months have been incredible and Nx probably got the biggest boost e
 
 ## Over 1.6 Million Downloads per week 🎉
 
-We hit a major milestone with Nx v13 when we reached 1 million weekly downloads back in December 2021. Only 3 months later, we’re already over 1.6 million per week and growing fast!
+We hit a major milestone with Nx v13 when we reached 1 million weekly downloads back in December 2021. Only 3 months later, we're already over 1.6 million per week and growing fast!
 
 {% tweet url="https://x.com/victorsavkin/status/1504465520640278533" /%}
 
@@ -30,7 +31,7 @@ We saw that coming and made it easy for people to migrate to Nx.
 npx add-nx-to-monorepo
 ```
 
-There’s a detailed guide helping with some of the doubts and misconceptions which commonly come up with Lerna users: [https://lerna.js.org/](https://lerna.js.org/)
+There's a detailed guide helping with some of the doubts and misconceptions which commonly come up with Lerna users: [https://lerna.js.org/](https://lerna.js.org/)
 
 The future for monorepo tools looks bright as the awareness of monorepos, especially in the JS ecosystem, has grown a lot in recent months. Nx is doing great compared to those tools. But this movement excites us and we are more than ever committed to keep pushing forward and making Nx even better.
 
@@ -38,13 +39,13 @@ The future for monorepo tools looks bright as the awareness of monorepos, especi
 
 ## Nx Console reaches 1 million installs
 
-While we’re talking numbers. We just hit another milestone 🎉
+While we're talking numbers. We just hit another milestone 🎉
 
 {% tweet url="https://x.com/NxDevTools/status/1518620884570820608" /%}
 
 ## Nx Core
 
-We made a lot of improvements in Nx core since v13 that can roughly be categorized into: making Nx faster, simpler and improved dev ergonomics. Let’s explore some of the highlights there
+We made a lot of improvements in Nx core since v13 that can roughly be categorized into: making Nx faster, simpler and improved dev ergonomics. Let's explore some of the highlights there
 
 ## Making Nx even faster!
 
@@ -61,11 +62,11 @@ How can Nx be so fast? One thing we did introduce after v13 and [recently enable
 
 > **_Running into a performance issue?_** _Try to debug it by using_ `_NX_PERF_LOGGING=true_` _in combination with your Nx command:_ `_NX_PERF_LOGGING=true nx build crew_`_. Alternatively, you can also have Nx generate a_ `_profile.json_` _and import it into Chrome Devtools._ [_Read more about that here_](/troubleshooting/performance-profiling)_._
 
-While a lot of the above improvements help with local development, one of the biggest pain points of having a large monorepo can be CI times. This is where **distributed task execution (DTE)** makes all the difference\*_._\* Nx Cloud’s DTE understands which commands your CI is running, how many agents are typically being used, and how long a given task typically takes. It leverages that information along with task dependencies to create an execution plan that prioritizes builds of shared libraries first to unblock upstream builds. This results in a more even utilization of CI agents, optimizing the overall running time of your CI.
+While a lot of the above improvements help with local development, one of the biggest pain points of having a large monorepo can be CI times. This is where **distributed task execution (DTE)** makes all the difference\*_._\* Nx Cloud's DTE understands which commands your CI is running, how many agents are typically being used, and how long a given task typically takes. It leverages that information along with task dependencies to create an execution plan that prioritizes builds of shared libraries first to unblock upstream builds. This results in a more even utilization of CI agents, optimizing the overall running time of your CI.
 
 ![](/blog/images/2022-05-02/k4ayjIt_OMEedxn-.avif)
 
-Over time, Nx Cloud’s DTE learns about your workspace, keeping metrics about running times to allow the best possible distribution of a given task with the given amount of agents. This comes with Nx Cloud.
+Over time, Nx Cloud's DTE learns about your workspace, keeping metrics about running times to allow the best possible distribution of a given task with the given amount of agents. This comes with Nx Cloud.
 
 > _Note, if you are a large enterprise, you might want to look into the_ [_Nx Private Cloud_](/enterprise) _offering which allows to self-host Nx Cloud within your own infrastructure._
 
@@ -83,7 +84,7 @@ Nx is also able now to directly pick up your `package.json` scripts which are co
 
 ## Terminal Output
 
-Developer experience is highly important to us. And that doesn’t stop at the terminal output which is something we developers constantly interact with throughout our entire workday. We, therefore, put a lot of love for the details into how we present our terminal output, improving it in a way to show all completed tasks towards the top, while information about the current progress is shown below
+Developer experience is highly important to us. And that doesn't stop at the terminal output which is something we developers constantly interact with throughout our entire workday. We, therefore, put a lot of love for the details into how we present our terminal output, improving it in a way to show all completed tasks towards the top, while information about the current progress is shown below
 
 _(here executed by skipping the cache to show some progress running_ 🙂*)*
 
@@ -95,7 +96,7 @@ We now even filter out the build of dependent projects. Say you build the `react
 
 Obviously, all errors would be reported properly, and on CI this behavior is disabled by default. If you want to disable it, you can always set `NX_TASKS_RUNNER_DYNAMIC_OUTPUT` to false.
 
-## “Local Plugins” for your Nx Workspace
+## "Local Plugins" for your Nx Workspace
 
 [Check out our previous release post](/blog/what-is-new-in-nx-13-10) where we went into some of the details on how local plugins work. But in a nutshell, you can now generate a plugin into an existing Nx workspace:
 
@@ -136,13 +137,13 @@ Or just use [Nx Console](/getting-started/editor-setup), as always.
 
 ![](/blog/images/2022-05-02/XFXDdGUWc3dF9ZMC.avif)
 
-This sets you up with an automated CI workflow that properly uses the Nx affected command together with the power of [Nx Cloud’s distributed task execution](/ci/features/distribute-task-execution).
+This sets you up with an automated CI workflow that properly uses the Nx affected command together with the power of [Nx Cloud's distributed task execution](/ci/features/distribute-task-execution).
 
 You can also use the `--all` flag when generating a new workspace, for seeing all the available options, including to setup CI.
 
 ## nx-cloud record
 
-The [Nx Cloud GitHub app](https://github.com/apps/nx-cloud) is so useful for not having to go to your CircleCI logs and try to find the entry you’re searching for. Instead all the executed targets nicely show up as a comment in your PR.
+The [Nx Cloud GitHub app](https://github.com/apps/nx-cloud) is so useful for not having to go to your CircleCI logs and try to find the entry you're searching for. Instead all the executed targets nicely show up as a comment in your PR.
 
 ![](/blog/images/2022-05-02/4zTea6s4BTMyDToD.avif)
 
@@ -156,13 +157,13 @@ Until now, you had to have a task that is being executed through Nx Cloud. But w
 npx nx-cloud record -- npx nx format:check
 ```
 
-and they will automatically show up in the Nx Cloud viewer. 🤫 you don’t even have to have Nx Cloud installed in the workspace.
+and they will automatically show up in the Nx Cloud viewer. 🤫 you don't even have to have Nx Cloud installed in the workspace.
 
 ## Module Federation for Faster Builds
 
 For many workspaces it is enough to leverage [Nx affected commands](/ci/features/affected), [computation caching](/concepts/how-caching-works) and [distributed task execution](/ci/features/distribute-task-execution).
 
-However, if you have a huge monorepo, this might not be enough. You can add incremental builds and benefit from caching, but still, you might run into the issue of the final linking process taking a long time, which can hardly be optimized further. Unless you can split up your app into smaller pieces. No, we’re not talking about micro frontends necessarily (more on that in the next section). Rather we can leverage Webpack’s Module Federation support.
+However, if you have a huge monorepo, this might not be enough. You can add incremental builds and benefit from caching, but still, you might run into the issue of the final linking process taking a long time, which can hardly be optimized further. Unless you can split up your app into smaller pieces. No, we're not talking about micro frontends necessarily (more on that in the next section). Rather we can leverage Webpack's Module Federation support.
 
 We added dedicated generators to create a new module federation setup for Angular and React:
 
@@ -186,13 +187,13 @@ npx nx serve shell
 
 and all the other remotes are statically served from the cache. Your entire infrastructure is working, without you having to worry about building and serving all of the separate remotes. As you can imagine this speeds up local serve times by an order of magnitude.
 
-If you want to work on one of the remotes, simply explicitly pass their name using `--devRemotes` flag and it will be served just normally with the Webpack dev server, with all the features you’re used to.
+If you want to work on one of the remotes, simply explicitly pass their name using `--devRemotes` flag and it will be served just normally with the Webpack dev server, with all the features you're used to.
 
 ```shell
 npx nx serve shell --devRemotes=cart,shop
 ```
 
-This can be a game-changer when building huge apps. Stay tuned for more content around this as we’re really just getting started.
+This can be a game-changer when building huge apps. Stay tuned for more content around this as we're really just getting started.
 
 We recommend this approach if you want to speed up local serve and build times, but you still deploy the application as a whole.
 

@@ -5,6 +5,7 @@ authors: ['Nicolas Beaussart', 'Juri Strumpflohner']
 tags: [nx]
 cover_image: /blog/images/articles/heroimg-nx-dynamic-targets.jpg
 youtubeUrl: https://www.youtube.com/embed/v0lSEYPjgOs
+description: Discover how to use Nx's task inference feature to automatically assign unique ports to multiple Storybook instances in your monorepo, eliminating port conflicts and improving development workflow.
 ---
 
 {% callout type="info" title="Nx Champion takeover" %}

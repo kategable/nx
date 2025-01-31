@@ -5,6 +5,7 @@ authors: ['Colum Ferry']
 tags: [nx, module federation, rspack, zephyr cloud]
 cover_image: /blog/images/2024-09-12/next-gen-module-federation-deployments.png
 published: true
+description: Exploring how Nx and Zephyr Cloud solve the complex challenges of deploying Micro Frontends using Module Federation, offering a scalable and developer-friendly solution for managing multiple build artifacts.
 ---
 
 Nx has supported Module Federation for a long time now and its popularity is seeing year-on-year increase. It has proven

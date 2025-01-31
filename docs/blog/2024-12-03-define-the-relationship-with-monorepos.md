@@ -4,6 +4,7 @@ slug: define-the-relationship-with-monorepos
 authors: ['Philip Fulcher']
 tags: [nx]
 cover_image: /blog/images/2024-12-03/header.avif
+description: A beginner-friendly introduction to monorepos, explaining how they help manage relationships between projects and demystifying common misconceptions about monorepo implementation.
 ---
 
 A monorepo might sound like a big, intimidating thing, but we're going to break it down to just the bare essentials. **A monorepo helps you better manage the relationships that already exist between your projects.** Once we understand those relationships, we can use tools to very quickly define them and pull them together into a more cohesive whole.

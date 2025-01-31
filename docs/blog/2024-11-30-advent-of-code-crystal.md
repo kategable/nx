@@ -5,6 +5,7 @@ authors: ['Zack DeRose']
 tags: [nx]
 cover_image: /blog/images/2024-11-30/thumbnail.png
 youtubeUrl: https://youtu.be/st6Yq-19bW8
+description: Introducing an Nx-powered starter repository for Advent of Code that handles tooling setup and infrastructure, allowing developers to focus solely on solving the daily programming challenges.
 ---
 
 Talking with developers, we've found that one of the main reasons folks like using Nx is: Nx allows their team to focus on shipping a great product, while Nx handles all the rest:
