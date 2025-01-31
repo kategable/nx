@@ -250,6 +250,10 @@
   "conformance": {
     "rules": [
       {
+        "rule": "@nx/workspace-plugin/conformance-rules/blog-description",
+        "projects": ["docs"]
+      },
+      {
         "rule": "@nx/workspace-plugin/conformance-rules/project-package-json",
         "projects": [
           "!.",
